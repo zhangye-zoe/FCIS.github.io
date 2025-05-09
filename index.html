@@ -18,8 +18,14 @@
     a { color: var(--accent); text-decoration: none; }
     /* Header */
     header { background: var(--bg-card); padding: 1.5em 1em; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-    .header-inner { display: flex; align-items: center; justify-content: center; gap: 1em; }
-    .hero-icon { width: 80px; }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start; /* 左对齐图标和标题 */
+      gap: 0.5em; /* 缩小图标与标题间距 */
+      padding-left: 1em; /* 使内容靠左 */
+    }
+    .hero-icon { width: 60px; /* 可根据需要调整图标大小 */ }
     h1 { margin: 0; font-size: 2.2em; color: var(--accent); }
     /* Authors */
     .authors { text-align: center; font-size: 0.95em; font-weight: 600; margin: 0.5em 0; }
@@ -45,16 +51,18 @@
     .demo-btn:hover { opacity: 0.9; }
     footer { text-align: center; padding: 1em 0; font-size: 0.85em; color: #718096; }
 
-    /* New: side-by-side image row */
+    /* Image row: side-by-side display */
     .image-row {
       display: flex;
-      justify-content: center;
       gap: 1em;
+      justify-content: center;
     }
     .image-row img {
-      max-width: 48%;
+      flex: 1;            /* 平等分配空间 */
+      max-width: none;    /* 取消 max-width 限制 */
       height: auto;
-      margin: 0;
+      display: block;
+      margin: 0;          /* 取消自动外边距 */
     }
   </style>
 </head>
@@ -67,7 +75,7 @@
     <p class="authors">Ye Zhang<sup>1</sup>, Yu Zhou<sup>2</sup>, Yifeng Wang<sup>3</sup>, Jun Xiao<sup>1</sup>, Ziyue Wang<sup>4</sup>, Yongbing Zhang<sup>1</sup>, Jianxu Chen<sup>2</sup></p>
     <div class="affiliations">
       <p><sup>1</sup>School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), China</p>
-      <p><sup>2</sup>Leibniz-Institut für Analytische Wissenschaften – ISAS – e.V., Germany</p>
+      <p><sup>2</sup>Leibniz-Institut für Analytische Wissenschaften – ISAS – e.V., Germany</p>
       <p><sup>3</sup>School of Science, Harbin Institute of Technology (Shenzhen), China</p>
       <p><sup>4</sup>Department of Electrical and Computer Engineering, National University of Singapore, Singapore</p>
     </div>
@@ -84,7 +92,7 @@
   <main>
     <section id="overview">
       <h2>Overview & Key Contributions</h2>
-      <p>We propose a novel cell instance segmentation method inspired by the four-color theorem. By conceptualizing cells as <span class="mbrown">countries</span> and tissues as <span class="mblue">oceans</span>, we introduce a four-color encoding scheme that ensures adjacent instances receive distinct labels. This reformulation transforms instance segmentation into a constrained semantic segmentation problem with only four predicted classes, substantially simplifying the instance differentiation process.</p>
+      <p>We propose a novel cell instance segmentation method inspired by the four-color theorem. By conceptualizing cells as <span class="mbrown">countries</span> and tissues as <span class="mblue">oceans</span>, we introduce a fourcolor encoding scheme that ensures adjacent instances receive distinct labels. This reformulation transforms instance segmentation into a constrained semantic segmentation problem with only four predicted classes, substantially simplifying the instance differentiation process.</p>
       <div class="image-row">
         <img src="assets/chinaMap.png" alt="Illustration of four-color encoding">
         <img src="assets/chinaMap-FC.png" alt="Illustration of four-color encoding">
