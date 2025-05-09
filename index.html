@@ -44,6 +44,18 @@
     .demo-btn { display: inline-block; background: var(--accent); color: #fff; padding: 0.6em 1.2em; border-radius: 4px; font-weight: 600; margin-top: 0.5em; }
     .demo-btn:hover { opacity: 0.9; }
     footer { text-align: center; padding: 1em 0; font-size: 0.85em; color: #718096; }
+
+    /* New: side-by-side image row */
+    .image-row {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+    }
+    .image-row img {
+      max-width: 48%;
+      height: auto;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
@@ -59,7 +71,6 @@
       <p><sup>3</sup>School of Science, Harbin Institute of Technology (Shenzhen), China</p>
       <p><sup>4</sup>Department of Electrical and Computer Engineering, National University of Singapore, Singapore</p>
     </div>
-    <!-- <p class="contacts">Contact: <a href="mailto:zhangye94@stu.hit.edu.cn">zhangye94@stu.hit.edu.cn</a></p> -->
     <nav>
       <ul>
         <li><a href="#overview"><span class="icon">🔍</span>Overview</a></li>
@@ -74,7 +85,10 @@
     <section id="overview">
       <h2>Overview & Key Contributions</h2>
       <p>We propose a novel cell instance segmentation method inspired by the four-color theorem. By conceptualizing cells as <span class="mbrown">countries</span> and tissues as <span class="mblue">oceans</span>, we introduce a four-color encoding scheme that ensures adjacent instances receive distinct labels. This reformulation transforms instance segmentation into a constrained semantic segmentation problem with only four predicted classes, substantially simplifying the instance differentiation process.</p>
-      <img src="assets/chinaMap.png" alt="Illustration of four-color encoding">
+      <div class="image-row">
+        <img src="assets/chinaMap.png" alt="Illustration of four-color encoding">
+        <img src="assets/chinaMap-FC.png" alt="Illustration of four-color encoding">
+      </div>
     </section>
     <section id="method">
       <h2>Method</h2>
