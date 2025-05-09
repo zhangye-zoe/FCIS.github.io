@@ -5,56 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FCIS: Four Color Theorem for Cell Instance Segmentation</title>
   <style>
-    body { font-family: 'Georgia', serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-    header { background: #f9f9f9; padding: 2em; text-align: center; }
-    nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 1em; margin-top: 1em; }
-    nav a { text-decoration: none; color: #336699; font-weight: bold; }
-    main { padding: 2em; max-width: 800px; margin: auto; }
+    /* Base styles */
+    body { font-family: 'Georgia', serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background: #fafafa; }
+    a { color: #336699; text-decoration: none; }
+    /* Header */
+    header { background: #fff; padding: 2em 1em; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .hero-icon { width: 120px; height: auto; margin-bottom: 1em; }
+    h1 { margin: 0.5em 0; font-size: 2.5em; color: #204060; font-family: 'Arial', sans-serif; }
+    /* Authors & Affiliations */
+    .authors { font-family: 'Arial', sans-serif; font-weight: bold; font-size: 1em; margin: 0.5em 0; }
+    .affiliations { font-family: 'Arial', sans-serif; font-size: 0.9em; margin: 0; line-height: 1.2; }
+    .affiliations p { margin: 0.1em 0; }
+    .contacts { font-family: 'Arial', sans-serif; font-size: 0.9em; margin: 0.5em 0; }
+    /* Navigation */
+    nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 1.5em; margin-top: 1em; }
+    nav a { font-family: 'Arial', sans-serif; font-weight: bold; display: flex; align-items: center; gap: 0.3em; }
+    .icon { font-size: 1.2em; color: #E63946; }
+    /* Main content */
+    main { padding: 2em 1em; max-width: 900px; margin: auto; }
     section { margin-bottom: 2em; }
-    h1 { margin: 0; font-size: 2em; }
-    h2 { border-bottom: 2px solid #eee; padding-bottom: 0.3em; }
-    .authors, .affiliations, .contacts { margin: 0.5em 0; font-style: italic; font-size: 0.9em; }
-    footer { text-align: center; padding: 1em; font-size: 0.9em; background: #f9f9f9; }
+    h2 { font-family: 'Arial', sans-serif; border-bottom: 2px solid #eee; padding-bottom: 0.3em; margin-top: 1.5em; }
+    /* Footer */
+    footer { text-align: center; padding: 1em; font-size: 0.9em; background: #fff; box-shadow: 0 -1px 4px rgba(0,0,0,0.1); }
+    /* Images & Code blocks */
     img { max-width: 100%; height: auto; display: block; margin: 1em auto; }
+    pre { background: #f4f4f4; padding: 1em; overflow-x: auto; }
   </style>
 </head>
 <body>
   <header>
+    <img src="assets/fcis_icon.png" alt="FCIS Project Icon" class="hero-icon">
     <h1>FCIS: The Four Color Theorem for Cell Instance Segmentation</h1>
-    <p class="authors">Ye Zhang<sup>1,2</sup>, Yu Zhou<sup>2</sup>, Yifeng Wang<sup>3</sup>, Jun Xiao<sup>1</sup>, Ziyue Wang<sup>4</sup>, Yongbing Zhang<sup>1</sup>, Jianxu Chen<sup>2</sup></p>
-    <p class="affiliations">
-      <sup>1</sup>Harbin Institute of Technology (Shenzhen), China &nbsp;|&nbsp;
-      <sup>2</sup>Leibniz-Institut für Analytische Wissenschaften – ISAS, Germany<br>
-      <sup>3</sup>Harbin Institute of Technology (Shenzhen), China &nbsp;|&nbsp;
-      <sup>4</sup>National University of Singapore, Singapore
-    </p>
-    <p class="contacts">Contact: <a href="mailto:ybzhang08@hit.edu.cn">ybzhang08@hit.edu.cn</a>, <a href="mailto:jianxu.chen@isas.de">jianxu.chen@isas.de</a></p>
+    <p class="authors">Ye Zhang<sup>1</sup>, Yu Zhou<sup>2</sup>, Yifeng Wang<sup>3</sup>, Jun Xiao<sup>1</sup>, Ziyue Wang<sup>4</sup>, Yongbing Zhang<sup>1</sup>, Jianxu Chen<sup>2</sup></p>
+    <div class="affiliations">
+      <p><sup>1</sup>School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), China</p>
+      <p><sup>2</sup>Leibniz-Institut für Analytische Wissenschaften – ISAS – e.V., Germany</p>
+      <p><sup>3</sup>School of Science, Harbin Institute of Technology (Shenzhen), China</p>
+      <p><sup>4</sup>Department of Electrical and Computer Engineering, National University of Singapore, Singapore</p>
+    </div>
+    <p class="contacts">Contact: <a href="mailto:zhangye94@stu.hit.edu.cn">zhangye94@stu.hit.edu.cn</a></p>
     <nav>
       <ul>
-        <li><a href="#abstract">Abstract</a></li>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#method">Method</a></li>
-        <li><a href="#results">Results</a></li>
-        <li><a href="#code">Code & Data</a></li>
-        <li><a href="#citation">Citation</a></li>
+        <li><a href="#abstract"><span class="icon">📄</span>Abstract</a></li>
+        <li><a href="#overview"><span class="icon">🔍</span>Overview</a></li>
+        <li><a href="#method"><span class="icon">⚙️</span>Method</a></li>
+        <li><a href="#results"><span class="icon">📈</span>Results</a></li>
+                <li><a href="#code"><span class="icon">💻</span>Code</a></li>
+        <li><a href="#demo"><span class="icon">🎬</span>Demo</a></li>
       </ul>
     </nav>
   </header>
   <main>
     <section id="abstract">
       <h2>Abstract</h2>
-      <p>Cell instance segmentation is fundamental to analyzing biomedical images, yet accurately distinguishing tightly touching cells remains a persistent challenge. Existing methods balance model performance and computational efficiency imperfectly. We propose a novel segmentation framework inspired by the four-color theorem, assigning each cell one of four labels to guarantee adjacent instances differ. An asymptotic training strategy and encoding transformation ensure stable convergence. Extensive experiments demonstrate state-of-the-art performance on multiple biomedical image datasets.</p>
+      <p>Cell instance segmentation is fundamental to analyzing biomedical images, yet accurately distinguishing tightly touching cells remains a persistent challenge. We propose a novel framework inspired by the four-color theorem to guarantee adjacent cells receive distinct labels. Our asymptotic training strategy, encoding transformation, and negative sampling yield state-of-the-art performance on multiple datasets.</p>
     </section>
     <section id="overview">
       <h2>Overview</h2>
-      <img src="assets/fig2.png" alt="Illustration of four-color encoding for cell segmentation">
-      <p>By treating cells as “countries” and the background as the “ocean,” our four-color encoding reformulates instance segmentation into a four-class semantic task, simplifying post-processing and improving computational efficiency.</p>
+      <img src="assets/fig2.png" alt="Illustration of four-color encoding">
+      <p>By treating cells as “countries” and background as “ocean,” our four-color encoding reformulates instance segmentation into a four-class semantic task, simplifying post-processing and improving efficiency.</p>
     </section>
     <section id="method">
       <h2>Method</h2>
-      <p><strong>Asymptotic Training:</strong> We first segment foreground vs. background, then predict the four-color labels within the foreground region.</p>
-      <p><strong>Encoding Transformation:</strong> A learnable module resolves the non-uniqueness of greedy four-color assignments, mapping network outputs to a consistent minimum-color representation.</p>
-      <p><strong>Negative Sampling:</strong> Orthogonality constraints between adjacent cell features enforce distinct color assignments.</p>
+      <p><strong>Asymptotic Training:</strong> Separate foreground segmentation before four-color labeling.</p>
+      <p><strong>Encoding Transformation:</strong> Learnable module to achieve minimal-color consistency.</p>
+      <p><strong>Negative Sampling:</strong> Orthogonality constraints enforce distinct adjacent labels.</p>
     </section>
     <section id="results">
       <h2>Results</h2>
@@ -63,22 +78,14 @@
         <li><strong>PanNuke:</strong> DICE = 0.816, PQ = 0.610</li>
         <li><strong>BBBC006v1:</strong> DICE = 0.954, PQ = 0.935</li>
       </ul>
-      <p>Our model outperforms state-of-the-art methods in both accuracy and efficiency, achieving superior segmentation quality with reduced parameters and FLOPs.</p>
     </section>
     <section id="code">
-      <h2>Code & Data</h2>
-      <p>Implementation, pretrained models, and datasets are available on <a href="https://github.com/yourusername/FCIS" target="_blank">GitHub</a>.</p>
+      <h2>Code</h2>
+      <p>Implementation and pretrained models on <a href="https://github.com/yourusername/FCIS" target="_blank">GitHub</a>.</p>
     </section>
-    <section id="citation">
-      <h2>Citation</h2>
-      <pre><code>@inproceedings{zhang2025fcis,
-  title = {The Four Color Theorem for Cell Instance Segmentation},
-  author = {Zhang, Ye and Zhou, Yu and Wang, Yifeng and Xiao, Jun and Wang, Ziyue and Zhang, Yongbing and Chen, Jianxu},
-  booktitle = {Proceedings of the 42nd International Conference on Machine Learning},
-  year = {2025},
-  series = {PMLR 267},
-  location = {Vancouver, Canada}
-}</code></pre>
+    <section id="demo">
+      <h2>Demo</h2>
+      <p>Try our interactive demo: <a href="https://yourdemo.link" target="_blank">Live Web Demo</a></p>
     </section>
   </main>
   <footer>
