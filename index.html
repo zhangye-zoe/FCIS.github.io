@@ -4,65 +4,201 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FCIS: Four Color Theorem for Cell Instance Segmentation</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     /* Color palette */
     :root {
-      --bg-main: #f0f4f8;
+      --bg-main: #f4f7fa;
       --bg-card: #ffffff;
-      --text-primary: #1a202c;
-      --accent: #336699;
-      --icon-color: #e63946;
+      --text-primary: #1f2937;
+      --text-secondary: #4b5563;
+      --accent: #2563eb;
+      --accent-light: #60a5fa;
+      --accent-dark: #1e40af;
+      --shadow: rgba(0, 0, 0, 0.1);
     }
-    /* Base styles */
-    body { margin: 0; padding: 0; background: var(--bg-main); color: var(--text-primary); font-family: 'Segoe UI', Tahoma, sans-serif; }
-    a { color: var(--accent); text-decoration: none; }
+
+    /* Reset & Base */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-main);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover { color: var(--accent); }
+
     /* Header */
-    header { background: var(--bg-card); padding: 1.5em 1em; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    header {
+      background: var(--bg-card);
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 12px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
     .header-inner {
       display: flex;
       align-items: center;
-      justify-content: flex-start; /* 左对齐图标和标题 */
-      gap: 0.5em; /* 缩小图标与标题间距 */
-      padding-left: 1em; /* 使内容靠左 */
-    }
-    .hero-icon { width: 60px; /* 可根据需要调整图标大小 */ }
-    h1 { margin: 0; font-size: 2.2em; color: var(--accent); }
-    /* Authors */
-    .authors { text-align: center; font-size: 0.95em; font-weight: 600; margin: 0.5em 0; }
-    .affiliations { text-align: center; font-size: 0.8em; line-height: 1.3; margin: 0; }
-    .affiliations p { margin: 0.1em 0; }
-    .contacts { text-align: center; font-size: 0.85em; margin-top: 0.5em; }
-    /* Navigation */
-    nav { background: var(--bg-card); margin-top: 0.5em; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-    nav ul { list-style: none; padding: 0.5em; display: flex; justify-content: center; gap: 2em; margin: 0; }
-    nav a { font-weight: 600; display: flex; align-items: center; gap: 0.3em; font-size: 0.95em; }
-    .icon { font-size: 1.2em; color: var(--icon-color); }
-    /* Custom text colors */
-    .mbrown { color: #8B4513; }
-    .mblue { color: #1f77b4; }
-    /* Main content */
-    main { max-width: 1000px; margin: 2em auto; padding: 0 1em; }
-    section { background: var(--bg-card); border-radius: 8px; padding: 1.5em; margin-bottom: 1.5em; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-    h2 { font-size: 1.5em; margin-top: 0; color: var(--accent); border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5em; }
-    section:nth-child(even) { background: #ffffff; }
-    img { max-width: 100%; height: auto; display: block; margin: 1em auto; }
-    ul { padding-left: 1.2em; }
-    .demo-btn { display: inline-block; background: var(--accent); color: #fff; padding: 0.6em 1.2em; border-radius: 4px; font-weight: 600; margin-top: 0.5em; }
-    .demo-btn:hover { opacity: 0.9; }
-    footer { text-align: center; padding: 1em 0; font-size: 0.85em; color: #718096; }
-
-    /* Image row: side-by-side display */
-    .image-row {
-      display: flex;
-      gap: 1em;
       justify-content: center;
+      gap: 1rem;
+    }
+    .hero-icon { width: 56px; height: auto; }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      color: var(--accent-dark);
+    }
+
+    /* Authors & Affiliations */
+    .authors {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin: 0.5rem 0;
+    }
+
+    .affiliations {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;      /* ↓ tighter lines */
+    }
+
+    .affiliations p {
+      margin: 0.25rem 0;     /* ↓ less gap between lines */
+    }
+
+
+    /* Navigation */
+    nav {
+      background: none;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav li a {
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+      padding: 0.5rem 0;
+    }
+    nav li a:hover {
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .icon { font-size: 1.2em; color: var(--accent-light); }
+
+    /* Main content */
+    main {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      background: var(--bg-card);
+      border-radius: 1rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 6px 16px var(--shadow);
+      transition: transform 0.3s ease;
+    }
+    section:hover { transform: translateY(-6px); }
+    h2 {
+      font-size: 1.875rem;
+      margin-bottom: 0.75rem;
+      color: var(--accent-dark);
+      border-bottom: 3px solid var(--accent-light);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Images grid */
+    .image-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
     }
     .image-row img {
-      flex: 1;            /* 平等分配空间 */
-      max-width: none;    /* 取消 max-width 限制 */
-      height: auto;
-      display: block;
-      margin: 0;          /* 取消自动外边距 */
+      width: 100%;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    .column-title {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Framework image */
+    .framework-row {
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .framework-row img {
+      width: 100%;
+      max-width: 800px;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    /* Foldable details */
+    details {
+      margin: 1.5rem 0;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--accent-dark);
+      font-size: 1.1rem;
+      list-style: none;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Call-to-action button */
+    .demo-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .demo-btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      box-shadow: 0 -3px 8px var(--shadow);
     }
   </style>
 </head>
@@ -72,12 +208,12 @@
       <img src="assets/FCIS.png" alt="FCIS Icon" class="hero-icon">
       <h1>FCIS: Four Color Theorem for Cell Instance Segmentation</h1>
     </div>
-    <p class="authors">Ye Zhang<sup>1</sup>, Yu Zhou<sup>2</sup>, Yifeng Wang<sup>3</sup>, Jun Xiao<sup>1</sup>, Ziyue Wang<sup>4</sup>, Yongbing Zhang<sup>1</sup>, Jianxu Chen<sup>2</sup></p>
+    <p class="authors">Ye Zhang¹² · Yu Zhou² · Yifeng Wang³ · Jun Xiao¹ · Ziyue Wang⁴ · Yongbing Zhang¹ · Jianxu Chen²</p>
     <div class="affiliations">
-      <p><sup>1</sup>School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), China</p>
-      <p><sup>2</sup>Leibniz-Institut für Analytische Wissenschaften – ISAS – e.V., Germany</p>
-      <p><sup>3</sup>School of Science, Harbin Institute of Technology (Shenzhen), China</p>
-      <p><sup>4</sup>Department of Electrical and Computer Engineering, National University of Singapore, Singapore</p>
+      <p>¹ School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), China</p>
+      <p>² Leibniz-Institut für Analytische Wissenschaften – ISAS – e.V., Germany</p>
+      <p>³ School of Science, Harbin Institute of Technology (Shenzhen), China</p>
+      <p>⁴ Department of Electrical and Computer Engineering, National University of Singapore, Singapore</p>
     </div>
     <nav>
       <ul>
@@ -89,40 +225,89 @@
       </ul>
     </nav>
   </header>
+
   <main>
     <section id="overview">
-      <h2>Overview & Key Contributions</h2>
-      <p>We propose a novel cell instance segmentation method inspired by the four-color theorem. By conceptualizing cells as <span class="mbrown">countries</span> and tissues as <span class="mblue">oceans</span>, we introduce a fourcolor encoding scheme that ensures adjacent instances receive distinct labels. This reformulation transforms instance segmentation into a constrained semantic segmentation problem with only four predicted classes, substantially simplifying the instance differentiation process.</p>
-      <div class="image-row">
-        <img src="assets/chinaMap.png" alt="Illustration of four-color encoding">
-        <img src="assets/chinaMap-FC.png" alt="Illustration of four-color encoding">
-      </div>
+      <h2>Overview</h2>
+      <p>We introduce a novel cell instance segmentation strategy inspired by the four-color theorem. Viewing cells as <span class="mbrown">countries</span> and tissue background as the <span class="mblue">ocean</span>, our four-color encoding guarantees that touching instances are labeled distinctly, recasting instance segmentation as a four-class semantic task for simpler, robust differentiation.</p>
+      <details open>
+        <summary>Four Color Theorem</summary>
+        <div class="image-row">
+          <div>
+            <div class="column-title">Original Map</div>
+            <img src="assets/chinaMap.png" alt="Original China Map">
+          </div>
+          <div>
+            <div class="column-title">FC Encoded Map</div>
+            <img src="assets/chinaMap-FC.png" alt="FC Encoded China Map">
+          </div>
+        </div>
+      </details>
+      <details open>
+        <summary>Cell Examples</summary>
+        <div class="image-row">
+          <div>
+            <div class="column-title">Original Cell 1</div>
+            <img src="assets/img1.png" alt="Original Cell Image 1">
+          </div>
+          <div>
+            <div class="column-title">Encoded Cell 1</div>
+            <img src="assets/fc1.png" alt="FC Encoded Cell Image 1">
+          </div>
+          <div>
+            <div class="column-title">Ground Truth 1</div>
+            <img src="assets/mask1.png" alt="FC Encoded Cell Image 1">
+          </div>
+          <div>
+            <div class="column-title">Original Cell 2</div>
+            <img src="assets/img2.png" alt="Original Cell Image 2">
+          </div>
+          <div>
+            <div class="column-title">Encoded Cell 2</div>
+            <img src="assets/fc2.png" alt="FC Encoded Cell Image 2">
+          </div>
+          <div>
+            <div class="column-title">Ground Truth 2</div>
+            <img src="assets/mask2.png" alt="FC Encoded Cell Image 1">
+          </div>
+        </div>
+      </details>
     </section>
+
     <section id="method">
       <h2>Method</h2>
-      <p><strong>Asymptotic Training:</strong> Separate foreground segmentation before four-color labeling.</p>
-      <p><strong>Encoding Transformation:</strong> Learnable module to achieve minimal-color consistency.</p>
-      <p><strong>Negative Sampling:</strong> Orthogonality constraints enforce distinct adjacent labels.</p>
+      <ul>
+        <li><strong>Asymptotic Training:</strong> Segment foreground before color assignment.</li>
+        <li><strong>Encoding Transformation:</strong> Learnable module enforcing minimal-color consistency.</li>
+        <li><strong>Orthogonality Loss:</strong> Distinct adjacent colors via negative sampling.</li>
+      </ul>
+      <div class="framework-row">
+        <img src="assets/Framework.png" alt="FCIS Framework Illustration">
+      </div>
     </section>
+
     <section id="results">
       <h2>Results</h2>
       <ul>
-        <li><strong>DSB2018:</strong> DICE = 0.939, PQ = 0.770</li>
-        <li><strong>PanNuke:</strong> DICE = 0.816, PQ = 0.610</li>
-        <li><strong>BBBC006v1:</strong> DICE = 0.954, PQ = 0.935</li>
+        <li><strong>DSB2018:</strong> DICE 0.939 · PQ 0.770</li>
+        <li><strong>PanNuke:</strong> DICE 0.816 · PQ 0.610</li>
+        <li><strong>BBBC006v1:</strong> DICE 0.954 · PQ 0.935</li>
       </ul>
     </section>
+
     <section id="code">
       <h2>Code</h2>
-      <p>Implementation and pretrained models are available on <a href="https://github.com/yourusername/FCIS" target="_blank">GitHub</a>.</p>
+      <p>Explore the full implementation and pretrained models on <a href="https://github.com/zhangye-zoe/FCIS" target="_blank" rel="noopener">GitHub</a>.</p>
     </section>
+
     <section id="demo">
       <h2>Demo</h2>
-      <a href="https://yourdemo.link" class="demo-btn" target="_blank">View Live Demo</a>
+      <a href="https://yourdemo.link" class="demo-btn" target="_blank" rel="noopener">View Live Demo</a>
     </section>
   </main>
+
   <footer>
-    <p>&copy; 2025 Ye Zhang et al.</p>
+    <p>&copy; 2025 Ye Zhang et al. All rights reserved.</p>
   </footer>
 </body>
 </html>
